@@ -1,27 +1,27 @@
 ---
 name: gemini-tg-image-gen
-description: Generate images via OpenRouter (google/gemini-2.5-flash-image) and send to Telegram. Use when user asks for AI-generated images in TG.
+description: Generate AI images via OpenRouter Gemini 2.5 Flash + send to Telegram. Set OPENROUTER_API_KEY env and run!
 ---
 
-# Gemini TG Image Gen (OpenRouter)
+# Gemini TG Image Gen
+
+## Quick Setup
+
+1. `export OPENROUTER_API_KEY=sk-or-your-key`
+2. `clawhub install gemini-tg-image-gen`
 
 ## Workflow
 
-1. Notify user: `message action=send channel=telegram text="⏳ Generating image, please wait..."`
-2. Run: `python3 scripts/generate_image.py "prompt"`
-3. Send image: `message action=send channel=telegram media="/root/.openclaw/workspace/tmp/openrouter_image_*.png" caption="Generated: prompt"`
-4. NO_REPLY.
-
-## Usage
-
-Script requires `OPENROUTER_API_KEY` env var. Outputs JSON: `{"paths": ["/path/to/image.png"]}`.
-
 ```
-python3 scripts/generate_image.py "A cat in space" "google/gemini-2.5-flash-image"
+message action=send channel=telegram text="⏳ Generating..."
+
+python3 scripts/generate_image.py "A futuristic city"
+
+message action=send channel=telegram media="/root/.openclaw/workspace/tmp/openrouter_image_*.png" caption="AI Generated"
+
+NO_REPLY
 ```
 
-## Notes
+Model: `google/gemini-2.5-flash-image` (default).
 
-- Saves to `/root/.openclaw/workspace/tmp`.
-- Handles data: URLs and direct downloads.
-- No keys in code — env only.
+No keys in code — env only!
