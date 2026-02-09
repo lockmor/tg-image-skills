@@ -1,6 +1,6 @@
 # Gemini TG Image Gen Skill for OpenClaw
 
-OpenClaw agent skill: Generate AI images with OpenRouter (Gemini 2.5 Flash) and send directly to Telegram.
+OpenClaw agent skill: Generate AI images with OpenRouter (Gemini 2.5 Flash) and send directly to Telegram **+ auto-cleanup**.
 
 ## 🚀 Quick Start (Insert Your API Key)
 
@@ -17,13 +17,13 @@ OpenClaw agent skill: Generate AI images with OpenRouter (Gemini 2.5 Flash) and 
    # Or in ~/.bashrc / OpenClaw env
    ```
 
-4. **Test in Agent:**
+4. **Test in Agent (Auto-Cleanup Included):**
    ```
    python3 /path/to/skills/gemini-tg-image-gen/scripts/generate_image.py "A cat in space"
-   # Outputs: {"paths": ["/tmp/openrouter_image_123.png"]}
+   # Outputs: {"paths": ["/tmp/openrouter_image_123.png"]} → Send → rm auto
    ```
 
-## 📱 Telegram Workflow
+## 📱 Telegram Workflow (Full + Cleanup)
 
 ```
 # 1. Notify
@@ -33,9 +33,12 @@ message action=send channel=telegram text="⏳ Generating image..."
 python3 scripts/generate_image.py "prompt"
 
 # 3. Send
-message action=send channel=telegram media="/tmp/openrouter_image_*.png" caption="Generated: prompt"
+message action=send channel=telegram media="/root/.openclaw/workspace/tmp/openrouter_image_*.png" caption="AI Generated: prompt"
 
-# 4. NO_REPLY
+# 4. Auto-Cleanup
+rm /root/.openclaw/workspace/tmp/openrouter_image_*.png
+
+# 5. NO_REPLY
 ```
 
 ## Files
@@ -46,6 +49,7 @@ message action=send channel=telegram media="/tmp/openrouter_image_*.png" caption
 ## Security
 
 - **API Key via ENV only** — Insert your own, never commit.
+- **Auto-deletes temp files** — No disk accumulation.
 - Public script: Safe to fork/share.
 
 Fork/PR: [github.com/lockmor/tg-image-skills](https://github.com/lockmor/tg-image-skills)
